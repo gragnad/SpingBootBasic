@@ -21,17 +21,28 @@ public class SystemController {
     private final SystemTransactionService systemTransactionService;
 
     @PostMapping(value = "/{event}")
-    public ResponseEntity<Map> getBasicData(@PathVariable String event, @RequestBody Map<String, Object> paramMap) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+    public ResponseEntity<Map> IntegratedBasic(@PathVariable String event, @RequestBody Map<String, Object> paramMap) {
+        HttpStatus status = HttpStatus.OK;
         Map<String, Object> result = new HashMap<>();
         try {
-            switch (event) {
-
-            }
             String sqlId = paramMap.get("SQL_ID").toString();
-            result.put("RESULT", systemTransactionService.select(sqlId, paramMap));
+            switch (event) {
+                case "READ":
+                    result.put("RESULT", systemTransactionService.select(sqlId, paramMap));
+                    break;
+                case "READ_LIST":
+                    result.put("RESULT", systemTransactionService.selectList(sqlId, paramMap));
+                    break;
+                case "INSERT":
+                    result.put("RESULT", systemTransactionService.insert(sqlId, paramMap));
+                    break;
+                case "UPDATE":
+                    result.put("RESULT", systemTransactionService.update(sqlId, paramMap));
+                    break;
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            status = HttpStatus.BAD_REQUEST;
             result.put("ERROR", e.getMessage());
         }
        return ResponseEntity.status(status).body(result);

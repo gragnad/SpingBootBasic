@@ -1,6 +1,7 @@
-package com.nalstudio.basic.component;
+package com.nalstudio.basic.component.push;
 
 import com.google.gson.GsonBuilder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.HttpHeaders;
@@ -14,6 +15,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Slf4j
+@RequiredArgsConstructor
+@Component(value = "pushManager")
 public class PushManager {
 
     private static PushManager instance;
@@ -35,7 +39,6 @@ public class PushManager {
     }
 
     private String fcmPushUrl = "https://fcm.googleapis.com/fcm/send";
-
     private String fcmPushKey = "";
 
     private String apnsPassword = "";

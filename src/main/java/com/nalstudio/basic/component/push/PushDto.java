@@ -1,4 +1,4 @@
-package com.nalstudio.basic.component;
+package com.nalstudio.basic.component.push;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
@@ -27,7 +27,7 @@ public class PushDto {
     @Setter
     @ToString
     @Builder
-    class FCMInfo{
+    static class FCMInfo{
         @SerializedName("pushType")
         private String pushType;
 
